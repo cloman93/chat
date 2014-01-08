@@ -1,0 +1,29 @@
+<head>
+	<title>Twitter Feed</title>
+</head>
+
+<body>
+	{{loginButtons align="right"}}<br>
+	<h1>Twitter Feed</h1>
+	{{> tweets}}
+</body>
+
+<template name="tweets">
+	{{#if logged_in}}
+		{{> new_tweet}}
+		{{#each tweets}}
+			<strong>{{author}}:</strong> {{tweet}}<br>
+			<em>Posted {{time}} ago</em><br>
+		{{/each}}
+	{{else}}
+		Please log in to view your tweets.
+	{{/if}}
+</template>
+
+<template name="new_tweet">
+	<p><textarea id="tweet" rows="3" cols="50" placeholder="Compose new Tweet..."/><br>
+		<input type="button" value="Tweet!" id="submit"/>
+	</p>
+
+	<p>Characters left: {{chars}} </p>
+</template>
