@@ -1,12 +1,17 @@
+Meteor.subscribe('tweets');
+
+
 Template.tweets.tweets = function() {
-	Tweets = Meteor.subscribe('tweets');
+	return Tweets.find({}).fetch();
 }
 
 
 Template.new_tweet.events = {
 	'click #submit' : function (event) {
 			if (Meteor.user()) {
-				var author = Meteor.user().profile.name;
+				console.log(Meteor.user());
+				//USE JQUERY HERE
+				var author = Meteor.user().emails[0];
 				var body = document.getElementById('tweet');
 				if (body.value.length < 140 && body.value.length > -1) {
 					Tweets.insert({
