@@ -1,3 +1,8 @@
 .login-buttons.dropdown-align-right {
 	float:right;
 }
+
+body {
+	padding-left: 30px;
+	padding-bottom: 200px;
+}

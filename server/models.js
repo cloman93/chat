@@ -1,5 +1,3 @@
-Tweets = new Meteor.Collection('tweets');
-
 Meteor.publish('tweets', function() {
 	// possibly overload this function to return the correct tweets
 	// for profiles

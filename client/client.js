@@ -1,20 +1,28 @@
+Meteor.subscribe('tweets');
+
+Router.configure({
+
+});
+
 Template.tweets.tweets = function() {
-	Tweets = Meteor.subscribe('tweets');
+	return Tweets.find({}, {sort: {time: -1, limit: 50}}).fetch();
 }
 
 
 Template.new_tweet.events = {
 	'click #submit' : function (event) {
 			if (Meteor.user()) {
-				var author = Meteor.user().profile.name;
+				console.log(Meteor.user());
+				//use jquery here
+				var author = Meteor.user().emails[0].address;
 				var body = document.getElementById('tweet');
 				if (body.value.length < 140 && body.value.length > -1) {
 					Tweets.insert({
 						author: author,
 						tweet: body.value,
-						time: Date.now(),
+						time: Date.now(), //moment js won't install
 					});
-					Template.new_tweet.tweet.value = ''; //maybe document.getEl?
+					document.getElementById('tweet').value='';
 					chars = 140;
 				} else {
 					alert("Tweets cannot exceed 140 characters!");
@@ -30,22 +38,13 @@ Template.new_tweet.events = {
 		if (body.value == "" || body.value == null) {
 			var remaining = 140;
 		} else {
-			var remaining = 141 - body.value.length;
+			var remaining = 140 - body.value.length;
 		}
 		console.log(remaining);
-		Template.new_tweet.chars = remaining;
+		$('#count').text('Characters left: ' + remaining);
 	}
 	
 }
-
-/*Template.new_tweet.chars.events = {
-	'keydown input#tweet' : function(event) {
-		var body = document.getElementById('tweet');
-		if (body == "" || body == null) return 140;
-		var remaining = 140 - body.length;
-		return remaining;
-	}
-}*/
 
 Template.tweets.logged_in = function() {
 	return (Meteor.user() != null)
