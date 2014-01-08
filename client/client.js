@@ -1,13 +1,8 @@
 Meteor.subscribe('tweets');
 
-Router.configure({
-
-});
-
 Template.tweets.tweets = function() {
 	return Tweets.find({}, {sort: {time: -1, limit: 50}}).fetch();
 }
-
 
 Template.new_tweet.events = {
 	'click #submit' : function (event) {
